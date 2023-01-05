@@ -147,19 +147,20 @@ summary(model1)
 
 model2<-glm(y~balance+default+housing+loan+duration,data=train,family="binomial")
 summary(model2)
-# As we can see in the second model, all p-values are less than 0.05
+# As we can see in the second model, all p-values are less than 0.05.
 
 # Model goodness of fit and predictive ability
 AIC(model1,model2)
 # Comparing the AIC of the models,
 # we can see that the second model is better than the first, although the difference is very small.
 
-# Probability that the customer has subscribed to the term deposit in test data set
+# Probability that the customer has subscribed a term deposit in test data set
 probability <- model2 %>% predict(test, type = "response")
 head(probability)
 
+# And lastly I will plot ROC curve
 library(pROC)
 
 plot.roc(test$y, probability,print.auc=TRUE, main="ROC curve")
 # We can see that the AUC is 0.840, which is quite high.
-# This indicates that our model does a good job of predicting whether or not an client will subscribe a term deposit.
+# This indicates that model2 does a good job of predicting whether or not an client will subscribe a term deposit.
